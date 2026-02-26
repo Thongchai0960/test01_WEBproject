@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Plan - Interactive</title>
+    <style>
+    :root {
+        --bg-dark: #0d0d12;
+        --box-bg: #1a1a24;
+        --text-light: #e0e0e0;
+        --neon-purple: #b829ff;
+        --neon-purple-glow: 0 0 5px #b829ff, 0 0 15px #b829ff, 0 0 30px #b829ff;
+        
+        /* ปรับสีหมวดหมู่วิชาให้สว่างขึ้นเพื่อให้ตัดกับสีดำ */
+        --c-yellow: #f1c40f;
+        --c-blue: #00e5ff;
+        --c-orange: #ff3d00;
+        --c-gray: #b0bec5;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* --- สไตล์ปุ่มย้อนกลับ --- */
+    .btn-back-home {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: var(--box-bg);
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        border: 1px solid var(--neon-purple);
+        border-radius: 30px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 5px rgba(184, 41, 255, 0.4);
+    }
+
+    .btn-back-home:hover {
+        background-color: var(--neon-purple);
+        color: #fff;
+        box-shadow: var(--neon-purple-glow);
+        transform: translateY(-2px);
+    }
+    /* ---------------------- */
+
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        text-shadow: var(--neon-purple-glow);
+        margin-bottom: 30px;
+        margin-top: 10px;
+    }
+
+    /* Container & Grid Setup */
+    .plan-container {
+        display: flex;
+        gap: 20px;
+        position: relative;
+        overflow-x: auto;
+        padding-bottom: 50px;
+        min-width: 1200px;
+    }
+
+    #arrowLayer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+        /* ทำให้เส้นลูกศรมีแสงเรืองๆ */
+        filter: drop-shadow(0 0 3px var(--neon-purple)); 
+    }
+
+    .year-column {
+        flex: 1;
+        min-width: 250px;
+        background: var(--box-bg);
+        border: 1px solid #333;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .year-header {
+        text-align: center;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        background-color: #2d1b4e;
+        border: 1px solid var(--neon-purple);
+        box-shadow: 0 0 10px rgba(184, 41, 255, 0.5);
+    }
+
+    .terms-container {
+        display: flex;
+        gap: 20px;
+    }
+
+    .term-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .term-header {
+        text-align: center;
+        font-size: 0.9em;
+        font-weight: bold;
+        padding: 5px;
+        border-bottom: 2px solid #333;
+        color: #aaa;
+        margin-bottom: 10px;
+    }
+
+    /* Course Box & Animation วิบวับ */
+    @keyframes pulse-glow {
+        0% { box-shadow: 0 0 5px var(--neon-purple); }
+        50% { box-shadow: var(--neon-purple-glow); }
+        100% { box-shadow: 0 0 5px var(--neon-purple); }
+    }
+
+    .course {
+        border: 2px solid #444;
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 0.8em;
+        text-align: center;
+        background-color: #222230;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        z-index: 11;
+    }
+
+    .course:hover {
+        transform: translateY(-3px) scale(1.02);
+        background-color: #2a2a3d;
+        border-color: var(--neon-purple) !important;
+        animation: pulse-glow 1.5s infinite; /* เอฟเฟกต์วิบวับเมื่อโฮเวอร์ */
+    }
+
+    /* สีขอบวิชาตามหมวดหมู่ */
+    .border-yellow { border-color: var(--c-yellow); }
+    .border-blue { border-color: var(--c-blue); }
+    .border-orange { border-color: var(--c-orange); }
+    .border-gray { border-color: var(--c-gray); }
+
+    .plan-divider {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 2px dashed var(--neon-purple);
+        text-align: center;
+        font-weight: bold;
+        color: var(--neon-purple);
+        font-size: 0.9em;
+        text-shadow: 0 0 5px var(--neon-purple);
+    }
+
+    /* คำอธิบายสีกรอบวิชา (Legend) & Info Box */
+    .legend-container, .info-box {
+        background: var(--box-bg);
+        border: 1px solid #333;
+        color: var(--text-light);
+    }
+
+    .legend-container {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        max-width: 800px;
+        margin-left: auto;
+    }
+
+    .legend-item { display: flex; align-items: center; font-size: 0.9em; }
+    .legend-box { width: 24px; height: 14px; border-radius: 4px; margin-right: 8px; }
+
+    .bg-yellow { background-color: var(--c-yellow); box-shadow: 0 0 5px var(--c-yellow); }
+    .bg-blue { background-color: var(--c-blue); box-shadow: 0 0 5px var(--c-blue); }
+    .bg-orange { background-color: var(--c-orange); box-shadow: 0 0 5px var(--c-orange); }
+    .bg-gray { background-color: var(--c-gray); box-shadow: 0 0 5px var(--c-gray); }
+</style>
+</head>
+
+<body>
+
+   <a href="/About_PhysIoT.html" class="btn-back-home">⬅ ย้อนกลับไปหน้า About IoT</a>
+
+    <h1>แผนการศึกษา : หลักสูตรฟิสิกส์อุตสาหกรรมและวิศวกรรมระบบไอโอทีและสารสนเทศ</h1>
+
+    <div class="plan-container" id="planContainer">
+        <svg id="arrowLayer"></svg>
+
+        <div class="year-column">
+            <div class="year-header y1">ปี 1</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-yellow" id="cal1" onclick="goToSubject('Calculus 1')">Calculus 1</div>
+                    <div class="course border-yellow" id="phy1" onclick="goToSubject('Physics 1')">Physics 1</div>
+                    <div class="course border-yellow" id="phyLab1" onclick="goToSubject('Physics Lab 1')">Physics Lab 1
+                    </div>
+                    <div class="course border-yellow" onclick="goToSubject('General Biology')">General Biology</div>
+                    <div class="course border-yellow" onclick="goToSubject('General Biology Lab')">General Biology Lab
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('Drawing and Workshop')">Drawing and Workshop
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('Computer Programming')">Computer Programming
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('Introduction to IoT')">Introduction to IoT
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('Software Application for Business')">
+                        Software Application for Business</div>
+                    <div class="course border-orange" id="eng1" onclick="goToSubject('Found English 1')">Found English 1
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('Charm School')">Charm School</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-yellow" id="cal2" onclick="goToSubject('Calculus 2')">Calculus 2</div>
+                    <div class="course border-yellow" id="phy2" onclick="goToSubject('Physics 2')">Physics 2</div>
+                    <div class="course border-yellow" id="phyLab2" onclick="goToSubject('Physics Lab 2')">Physics Lab 2
+                    </div>
+                    <div class="course border-blue" id="fundDigi" onclick="goToSubject('Fundamental Digital System')">
+                        Fundamental Digital System</div>
+                    <div class="course border-blue" id="circuits" onclick="goToSubject('Circuit and Electronics')">
+                        Circuit and Electronics</div>
+                    <div class="course border-blue" onclick="goToSubject('Object-Oriented Data Structure')">
+                        Object-Oriented Data Structure</div>
+                    <div class="course border-orange" onclick="goToSubject('Digital Citizen')">Digital Citizen</div>
+                    <div class="course border-orange" onclick="goToSubject('Pre-Activities For Engineers')">
+                        Pre-Activities For Engineers</div>
+                    <div class="course border-orange" id="eng2" onclick="goToSubject('Found English 2')">Found English 2
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('Team Project 1')">Team Project 1</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y2">ปี 2</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-yellow" onclick="goToSubject('MATH FOR PHYSICISTS')">MATH FOR PHYSICISTS
+                    </div>
+                    <div class="course border-yellow" onclick="goToSubject('Electronic Circuit')">Electronic Circuit
+                    </div>
+                    <div class="course border-yellow" onclick="goToSubject('Electronic Lab')">Electronic Lab</div>
+                    <div class="course border-yellow" id="emag" onclick="goToSubject('Electromagnetic Fields')"> ElectromagneticFields</div>
+                    <div class="course border-yellow" onclick="goToSubject('SENSORS AND TRANSDUCERS')">SENSORS AND
+                        TRANSDUCERS</div>
+                    <div class="course border-blue" id="microcon"
+                        onclick="goToSubject('Microcontroller and Interfacing')">Microcontroller and Interfacing</div>
+                    <div class="course border-yellow" onclick="goToSubject('Intermediate Physics Lab 1')">Intermediate
+                        Physics Lab 1</div>
+                    <div class="course border-blue" onclick="goToSubject('Principles of Communication')">Principles of
+                        Communication</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-yellow" onclick="goToSubject('INDUSTRIAL STATISTICS')">INDUSTRIAL
+                        STATISTICS</div>
+                    <div class="course border-yellow" onclick="goToSubject('Wave & Optics')">Wave & Optics</div>
+                    <div class="course border-yellow" onclick="goToSubject('Modern Physics')">Modern Physics</div>
+                    <div class="course border-blue" onclick="goToSubject('Digital Electronic Lab')">Digital Electronic
+                        Lab</div>
+                    <div class="course border-yellow" onclick="goToSubject('Mechanic')">Mechanic</div>
+                    <div class="course border-yellow" onclick="goToSubject('Intermediate Physics Lab 2')">Intermediate
+                        Physics Lab 2</div>
+                    <div class="course border-blue" onclick="goToSubject('Web and Mobile App Development')">Web and
+                        Mobile App Development</div>
+                    <div class="course border-blue" onclick="goToSubject('Interaction Design')">Interaction Design</div>
+                    <div class="course border-blue" onclick="goToSubject('IoT Networks and Data Communications')">IoT
+                        Networks and Data Communications</div>
+                    <div class="course border-orange" onclick="goToSubject('Team Project 2')">Team Project 2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y3">ปี 3</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-yellow" onclick="goToSubject('Chemistry')">Chemistry</div>
+                    <div class="course border-yellow" onclick="goToSubject('Chemistry Lab')">Chemistry Lab</div>
+                    <div class="course border-yellow" onclick="goToSubject('Thermal Physics')">Thermal Physics</div>
+                    <div class="course border-yellow" onclick="goToSubject('Physics and Semiconductor')">Physics and
+                        Semiconductor</div>
+                    <div class="course border-yellow" onclick="goToSubject('SEMINAR')">SEMINAR</div>
+                    <div class="course border-yellow" onclick="goToSubject('INDUSTRIAL PHYSICS LAB 1')">INDUSTRIAL
+                        PHYSICS LAB 1</div>
+                    <div class="course border-blue" onclick="goToSubject('Artificial Intelligence')">Artificial
+                        Intelligence</div>
+                    <div class="course border-blue" onclick="goToSubject('MAJOR ELECTIVE 1')">MAJOR ELECTIVE 1</div>
+                    <div class="course border-blue" onclick="goToSubject('MAJOR ELECTIVE 2')">MAJOR ELECTIVE 2</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (ฝึกงาน)</div>
+                    <div class="course border-yellow" onclick="goToSubject('Quantum Mechanic & Technology')">Quantum
+                        Mechanic & Technology</div>
+                    <div class="course border-yellow" onclick="goToSubject('Measurement and Instrumentation')">
+                        Measurement and Instrumentation</div>
+                    <div class="course border-yellow" onclick="goToSubject('INDUSTRIAL PHYSICS LAB 2')">INDUSTRIAL
+                        PHYSICS LAB 2</div>
+                    <div class="course border-blue" onclick="goToSubject('MAJOR ELECTIVE 3')">MAJOR ELECTIVE 3</div>
+                    <div class="course border-blue" onclick="goToSubject('Elective 1')">Elective 1</div>
+                    <div class="course border-blue" onclick="goToSubject('Industrial IoT')">Industrial IoT</div>
+                    <div class="course border-blue" onclick="goToSubject('Cyber Security')">Cyber Security</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed (LANG)')">Gen-Ed (LANG)</div>
+                    <div class="course border-orange" onclick="goToSubject('Team Project 3')">Team Project 3</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y4">ปี 4</div>
+
+            <div class="plan-divider">Plan 1: Project</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-gray" onclick="goToSubject('Project 1')">Project 1</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 2')">Elective 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 1')">Free Elective 1</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Project 2')">Project 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 3')">Elective 3</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 2')">Free Elective 2</div>
+                </div>
+            </div>
+
+            <div class="plan-divider">Plan 2: Co-op</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-gray" style="height: 100%;"
+                        onclick="goToSubject('Co-Operative / Study Abroad')">Co-Operative /<br>Study Abroad</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 2')">Elective 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 3')">Elective 3</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 1')">Free Elective 1</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 2')">Free Elective 2</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="legend-container">
+        <div class="legend-item">
+            <div class="legend-box bg-yellow"></div> วิชาทางฟิสิกส์
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-blue"></div> วิชา IoT / คอมพิวเตอร์
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-orange"></div> วิชาศึกษาทั่วไป / พื้นฐาน
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-gray"></div> วิชาเลือก / โปรเจกต์ / ฝึกงาน
+        </div>
+    </div>
+
+    <div class="info-box" style="padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); margin-top: 20px;">
+        <h2 style="margin-top: 0; color: #ffffff; text-shadow: 0 0 5px #b829ff, 0 0 15px #b829ff; text-align: center;">หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมคอมพิวเตอร์</h2>
+        <p><strong>จำนวนหน่วยกิตรวมตลอดหลักสูตร:</strong> ไม่น้อยกว่า 135 หน่วยกิต</p>
+        <p><strong>โครงสร้างหลักสูตร:</strong></p>
+        <ul style="margin-bottom: 0; line-height: 1.8;">
+            <li>หมวดวิชาศึกษาทั่วไป 30 หน่วยกิต</li>
+            <li>หมวดวิชาเฉพาะ 99 หน่วยกิต (วิชาแกน, วิชาเอกบังคับ, วิชาเอกเลือก)</li>
+            <li>หมวดวิชาเลือกเสรี 6 หน่วยกิต</li>
+        </ul>
+    </div>
+
+    <script>
+        function goToSubject(courseName) {
+            window.location.href = `subject1.html?name=${encodeURIComponent(courseName)}`;
+        }
+
+        // กำหนดวิชาตัวต่อ (ใช้ ID ให้ตรงกับในไฟล์ HTML ของคุณ)
+        const connections = [
+            ['cal1', 'cal2'],
+            ['phy1', 'phy2'],
+            ['phyLab1', 'phyLab2'],
+            ['eng1', 'eng2'],
+
+            // ถ้า HTML ของคุณใช้ id="fundDigi" และ "circuits" ให้ใช้ตามนี้ครับ
+            // แต่ถ้าแก้เป็น digitalFund หรือ circuit แล้ว ก็ปรับชื่อให้ตรงกันได้เลย
+            ['fundDigi', 'microcon'],
+
+            // -------- เพิ่มเส้นโยงใหม่ข้ามปีตรงนี้ --------
+            ['phy2', 'emag'],      // จาก Physics 2 ไป Electromagnetic
+            ['phyLab2', 'emag']    // จาก Physics Lab 2 ไป Electromagnetic
+        ];
+
+
+        function drawConnections() {
+            const svg = document.getElementById('arrowLayer');
+            const container = document.getElementById('planContainer');
+
+            if (!svg || !container) return;
+
+            svg.innerHTML = '';
+            svg.style.width = Math.max(container.scrollWidth, container.clientWidth) + 'px';
+            svg.style.height = Math.max(container.scrollHeight, container.clientHeight) + 'px';
+
+            const containerRect = container.getBoundingClientRect();
+
+            // 1. ตั้งค่าหัวลูกศรใหม่: เปลี่ยนจุดเชื่อม (refX="0") ให้อยู่ที่ "โคนลูกศร" แทนปลายแหลม
+            const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            defs.innerHTML = `
+        <marker id="arrowClean" markerWidth="10" markerHeight="10" refX="0" refY="5" orient="auto">
+            <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#b829ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+    `;
+            svg.appendChild(defs);
+
+            connections.forEach(pair => {
+                const startEl = document.getElementById(pair[0]);
+                const endEl = document.getElementById(pair[1]);
+
+                if (startEl && endEl) {
+                    const startRect = startEl.getBoundingClientRect();
+                    const endRect = endEl.getBoundingClientRect();
+
+                    const startX = (startRect.right - containerRect.left) + container.scrollLeft;
+                    const startY = (startRect.top - containerRect.top) + container.scrollTop + (startRect.height / 2);
+
+                    // ขอบซ้ายของกล่องวิชาปลายทาง
+                    const boxLeft = (endRect.left - containerRect.left) + container.scrollLeft;
+
+                    // 2. หยุดเส้น Path ก่อนถึงกล่องเป้าหมาย 10px (เว้นที่ว่างให้ลูกศรพอดี)
+                    const endX = boxLeft - 10;
+                    const endY = (endRect.top - containerRect.top) + container.scrollTop + (endRect.height / 2);
+
+                    // คำนวณความโค้งให้สมดุลตามระยะห่าง
+                    const distX = boxLeft - startX;
+                    const offset = Math.max(50, distX * 0.4);
+
+                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+                    // วาดเส้นโค้งตัว S 
+                    const pathData = `M ${startX} ${startY} C ${startX + offset} ${startY}, ${endX - offset} ${endY}, ${endX} ${endY}`;
+
+                    path.setAttribute('d', pathData);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', '#b829ff'); // เปลี่ยนจาก '#777' เป็นสีม่วงเรืองแสง
+                    path.setAttribute('stroke-width', '1.5');
+                    path.setAttribute('marker-end', 'url(#arrowClean)');
+
+                    svg.appendChild(path);
+                }
+            });
+        }
+
+        window.addEventListener('load', () => setTimeout(drawConnections, 300));
+        window.addEventListener('resize', drawConnections);
+    </script>
+</body>
+
+</html>

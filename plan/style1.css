@@ -1,0 +1,11 @@
+#planContainer {
+    position: relative; /* สำคัญมาก เพื่อให้เส้น SVG เกาะอยู่กับคอนเทนเนอร์ ไม่ลอยไปมา */
+}
+
+#arrowLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* เพื่อให้เมาส์กดทะลุเส้นได้ */
+    z-index: 10;
+}

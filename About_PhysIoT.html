@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About IoT - Dual Degree KMITL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090014;
+            --card-bg: rgba(20, 5, 40, 0.7);
+            --text-light: #e0d5f0;
+            --neon-purple: #b829ff;
+            --neon-light: #df9aff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 15% 50%, rgba(184, 41, 255, 0.08), transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(184, 41, 255, 0.12), transparent 30%);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 5px var(--neon-purple), inset 0 0 5px var(--neon-purple);
+                border-color: rgba(184, 41, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 15px var(--neon-purple), inset 0 0 10px var(--neon-purple);
+                border-color: var(--neon-light);
+            }
+
+            100% {
+                box-shadow: 0 0 5px var(--neon-purple), inset 0 0 5px var(--neon-purple);
+                border-color: rgba(184, 41, 255, 0.5);
+            }
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 5px var(--neon-purple);
+            }
+
+            50% {
+                text-shadow: 0 0 20px var(--neon-light), 0 0 30px var(--neon-purple);
+                color: #fff;
+            }
+
+            100% {
+                text-shadow: 0 0 5px var(--neon-purple);
+            }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            color: var(--neon-light);
+            animation: textGlow 2s infinite alternate;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .hero-section h2 {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .intro-text {
+            background: var(--card-bg);
+            border: 1px solid rgba(184, 41, 255, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            text-align: justify;
+        }
+
+        /* --- สไตล์ของปุ่มลิงก์ไปหน้าแผนการศึกษา --- */
+        .cta-container {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .btn-glow {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: rgba(20, 5, 40, 0.8);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: 2px solid var(--neon-purple);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px var(--neon-light);
+            box-shadow: 0 0 10px rgba(184, 41, 255, 0.4), inset 0 0 10px rgba(184, 41, 255, 0.4);
+            animation: neonPulse 2s infinite alternate;
+        }
+
+        .btn-glow:hover {
+            background-color: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 25px var(--neon-purple), inset 0 0 15px var(--neon-light);
+            transform: translateY(-5px) scale(1.05);
+            /* ขยายและเด้งขึ้นเมื่อเอาเมาส์ชี้ */
+            text-shadow: none;
+        }
+
+        /* -------------------------------------- */
+
+        /* Grid Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-purple);
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s;
+            animation: neonPulse 4s infinite alternate;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: var(--neon-light);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(184, 41, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* Careers Section */
+        .careers-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            border-left: 5px solid var(--neon-purple);
+        }
+
+        .careers-section h3 {
+            color: var(--neon-light);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .career-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .career-tag {
+            background: rgba(184, 41, 255, 0.1);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid var(--neon-purple);
+            transition: all 0.3s;
+        }
+
+        .career-tag:hover {
+            background: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        /* Timeline History Section */
+        .history-section h3 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--neon-light);
+            margin-bottom: 30px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: var(--neon-purple);
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            margin-left: -1px;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        .timeline-item {
+            padding: 10px 40px 30px 50px;
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            right: auto;
+            left: 13px;
+            background-color: var(--bg-dark);
+            border: 3px solid var(--neon-light);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--neon-light);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--neon-light);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .timeline-content {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(184, 41, 255, 0.2);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-section h2 {
+                font-size: 1.2rem;
+            }
+
+            .btn-glow {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        .btn-analyze {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: rgba(20, 5, 40, 0.8);
+            color: var(--neon-light);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 1px solid var(--neon-purple);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(184, 41, 255, 0.4);
+        }
+
+        .btn-analyze:hover {
+            background-color: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 15px var(--neon-purple);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1>DUAL DEGREE KMITL</h1>
+            <h2>วศ.บ. วิศวกรรมระบบไอโอทีและสารสนเทศ<br>x<br>วท.บ. ฟิสิกส์อุตสาหกรรม</h2>
+            <p style="color: #bbb;">ครั้งแรกของประเทศไทย กับโครงการหลักสูตรปริญญาตรีสองปริญญา
+                ระหว่างคณะวิศวกรรมศาสตร์และคณะวิทยาศาสตร์</p>
+        </div>
+
+        <div class="intro-text">
+            <p><strong>กำเนิดหลักสูตร "PhysIoT"</strong><br>
+                ในโลกยุค Disruption ได้เปลี่ยนแปลงทุกสิ่งไปอย่างรวดเร็ว
+                การรู้เพียงศาสตร์ใดศาสตร์หนึ่งจึงอาจไม่เพียงพอกับการต่อสู้ในยุคแห่งการเปลี่ยนแปลงนี้แล้ว
+                โดยเฉพาะอย่างยิ่งทักษะทางดิจิทัลและเทคโนโลยีที่จำเป็นต่อโลกอันไร้พรมแดน จึงเป็นที่มาของหลักสูตร
+                <strong>“PhysIoT”</strong> ที่ตอบสนองการเปลี่ยนแปลงนี้
+                ให้บัณฑิตมีความรู้รอบด้านทั้งวิทยาศาสตร์และวิศวกรรมศาสตร์
+                เพื่อผลิตนักฟิสิกส์ไอโอทีที่สามารถสร้างนวัตกรรม ขับเคลื่อนประเทศไทยสู่อุตสาหกรรมยุค 4.0, New S-Curve
+                และอุตสาหกรรมแห่งอนาคต
+            </p>
+        </div>
+
+        <div class="cta-container">
+            <a href="plan/FontOpen1.html" class="btn-glow">🚀 ดูแผนการศึกษา (Interactive Study Plan)</a>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🎓 เรียน 4 ปี ได้ 2 ปริญญา</h3>
+                <p>รับทันที 2 วุฒิการศึกษาเมื่อจบหลักสูตร: <br>- วศ.บ. วิศวกรรมระบบไอโอทีและสารสนเทศ<br>- วท.บ.
+                    ฟิสิกส์อุตสาหกรรม</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🚀 ทลายกำแพงระหว่างคณะ</h3>
+                <p>ศึกษาและปฏิบัติด้านอิเล็กทรอนิกส์อัจฉริยะและสมาร์ทเซ็นเซอร์ การออกแบบและควบคุมอุปกรณ์สมาร์ทดีไวซ์
+                    โดยใช้พื้นฐานด้านวงจรไฟฟ้า อิเล็กทรอนิกส์ ระบบดิจิทัล และระบบสมองกลฝังตัว</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔥 จบแล้วฮอตสุด ไม่มีตกยุค</h3>
+                <p>สายงานไอทีติด "Top 10 อาชีพไม่ตกงาน" อย่างแน่นอน
+                    เป็นอุตสาหกรรมดิจิทัลที่รัฐบาลให้การสนับสนุนและตลาดมีความต้องการตัวบัณฑิตสูงมาก</p>
+            </div>
+        </div>
+
+        <div class="careers-section">
+            <div
+                style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+                <h3 style="margin-bottom: 0;">💼 อาชีพที่ประกอบได้หลังจบการศึกษา</h3>
+
+                <a href="sho/analyze.html" class="btn-analyze">🎯 วิเคราะห์อาชีพที่เหมาะกับคุณ</a>
+            </div>
+
+            <div class="career-tags">
+                <span class="career-tag">นักวิจัยในภาครัฐและเอกชน</span>
+                <span class="career-tag">ผู้ประกอบการทางธุรกิจเทคโนโลยี</span>
+                <span class="career-tag">วิศวกรไอโอที (IoT Engineer)</span>
+                <span class="career-tag">วิศวกรซอฟต์แวร์ (Software Engineer)</span>
+                <span class="career-tag">วิศวกรระบบสมองกลฝังตัว (Embedded Engineer)</span>
+                <span class="career-tag">นักพัฒนาแอพพลิเคชัน (Application Developer)</span>
+                <span class="career-tag">นักวิทยาการข้อมูล (Data Scientist)</span>
+                <span class="career-tag">วิศวกรควบคุณภาพ</span>
+                <span class="career-tag">วิศวกรฝ่ายวิจัยและพัฒนา (R&D)</span>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <h3>ความเป็นมาของหลักสูตร</h3>
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-date">พ.ศ. 2517 - 2541</div>
+                    <div class="timeline-content">
+                        <strong>จุดเริ่มต้น: ภาควิชาเทคนิคอุตสาหกรรม</strong><br>
+                        เปิดรับนักศึกษาในหลักสูตรอุตสาหกรรมศาสตรบัณฑิต แขนงเทคโนโลยีโทรทัศน์ (รับผู้จบ ปวส. เรียน 3 ปี)
+                        ต่อมาในปี 2541 ได้รับอนุมัติเป็นหลักสูตรวิศวกรรมศาสตรบัณฑิต (เรียน 4 ปี)
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">พ.ศ. 2544</div>
+                    <div class="timeline-content">
+                        <strong>เปลี่ยนชื่อเป็น: ภาควิชาวิศวกรรมสารสนเทศ</strong><br>
+                        ปรับปรุงหลักสูตรเพื่อผลิตวิศวกรที่มีความรู้พื้นฐานคอมพิวเตอร์ โทรคมนาคม อิเล็กทรอนิกส์
+                        และการจัดการข้อมูล รองรับตลาดแรงงานด้าน IT อย่างเต็มตัว
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">พ.ศ. 2553</div>
+                    <div class="timeline-content">
+                        <strong>ร่วมโครงสร้าง: ภาควิชาวิศวกรรมคอมพิวเตอร์</strong><br>
+                        คณาจารย์ทำงานร่วมกับภาควิชาวิศวกรรมคอมพิวเตอร์ ปรับปรุงหลักสูตรให้ทันสมัย เน้นการวิเคราะห์
+                        ออกแบบ ประยุกต์ใช้เทคโนโลยีสร้างสรรค์ (งดรับนักศึกษาชั่วคราวในปี 2563-2564)
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">พ.ศ. 2564 - ปัจจุบัน</div>
+                    <div class="timeline-content">
+                        <strong>สู่ยุคใหม่: วิศวกรรมระบบไอโอทีและสารสนเทศ</strong><br>
+                        ปรับเป็นหลักสูตรตามนโยบาย "Disruptive Curriculum" บูรณาการความร่วมมือกับคณะวิทยาศาสตร์เกิดเป็น
+                        <strong>"โครงการหลักสูตรสองปริญญา" (Dual Degree)</strong> พร้อมเปิดหลักสูตรวิชาโท (Minor
+                        Program) ด้านระบบไอโอทีและระบบอัจฉริยะ
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
