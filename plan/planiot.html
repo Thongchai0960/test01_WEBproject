@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Plan - IoT System and Information</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        /* จัดฟอร์แมตในกล่องวิชาให้แสดง ชื่อ, หน่วยกิต, รหัส ได้สวยงาม */
+        .course {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 5px;
+            line-height: 1.3;
+            text-align: center;
+            min-height: 70px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .c-name { font-weight: bold; font-size: 0.85em; margin-bottom: 3px; }
+        .c-credit { font-size: 0.8em; color: #f1c40f; font-weight: bold; margin-bottom: 3px; }
+        .c-code { font-size: 0.7em; color: #aaaaaa; }
+
+        /* สีเพิ่มเติมสำหรับโครงสร้างนี้ */
+        .border-gray { border-color: #888888 !important; }
+        .bg-gray { background-color: #888888 !important; }
+    </style>
+</head>
+<body>
+
+    <a href="../About_iot.html" class="btn-back-home">⬅ ย้อนกลับไปหน้า About IoT</a>
+
+    <h1>แผนการศึกษา : วิศวกรรมระบบไอโอทีและสารสนเทศ</h1>
+
+    <div class="plan-container" id="planContainer">
+        <svg id="arrowLayer"></svg>
+
+        <div class="year-column">
+            <div class="year-header y1">ปี 1</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1 (SEM 1/1)</div>
+                    <div class="course border-yellow" id="cal1" onclick="goToSubject('CALCULUS 1')">
+                        <div class="c-name">CALCULUS 1</div><div class="c-credit">(3)</div><div class="c-code">01006030</div>
+                    </div>
+                    <div class="course border-yellow" id="phys1" onclick="goToSubject('GEN PHYS 1')">
+                        <div class="c-name">GEN PHYS 1</div><div class="c-credit">(3)</div><div class="c-code">01006020</div>
+                    </div>
+                    <div class="course border-yellow" id="physLab1" onclick="goToSubject('GEN PHYS LAB 1')">
+                        <div class="c-name">GEN PHYS LAB 1</div><div class="c-credit">(1)</div><div class="c-code">01006021</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('CIRCUIT ELEC')">
+                        <div class="c-name">CIRCUIT ELEC</div><div class="c-credit">(3)</div><div class="c-code">01236604</div>
+                    </div>
+                    <div class="course border-blue" id="comProg" onclick="goToSubject('COM PROG')">
+                        <div class="c-name">COM PROG</div><div class="c-credit">(3)</div><div class="c-code">01006012</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('INTRO IOT')">
+                        <div class="c-name">INTRO IOT</div><div class="c-credit">(3)</div><div class="c-code">01236611</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('CIR ELEC LAB')">
+                        <div class="c-name">CIR ELEC LAB</div><div class="c-credit">(1)</div><div class="c-code">01236605</div>
+                    </div>
+                    <div class="course border-yellow" onclick="goToSubject('3D DRAWING')">
+                        <div class="c-name">3D DRAWING</div><div class="c-credit">(1)</div><div class="c-code">01236610</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('INTRO ENGLISH')">
+                        <div class="c-name">INTRO ENGLISH</div><div class="c-credit">(0)</div><div class="c-code">90641008</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('PRE ACT')">
+                        <div class="c-name">PRE ACT</div><div class="c-credit">(1)</div><div class="c-code">90642036</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('DIGI CITIZEN')">
+                        <div class="c-name">DIGI CITIZEN</div><div class="c-credit">(3)</div><div class="c-code">90641007</div>
+                    </div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (SEM 1/2)</div>
+                    <div class="course border-yellow" id="cal2" onclick="goToSubject('CALCULUS 2')">
+                        <div class="c-name">CALCULUS 2</div><div class="c-credit">(3)</div><div class="c-code">01006031</div>
+                    </div>
+                    <div class="course border-yellow" id="phys2" onclick="goToSubject('GEN PHYS 2')">
+                        <div class="c-name">GEN PHYS 2</div><div class="c-credit">(3)</div><div class="c-code">01006022</div>
+                    </div>
+                    <div class="course border-yellow" id="physLab2" onclick="goToSubject('GEN PHYS LAB 2')">
+                        <div class="c-name">GEN PHYS LAB 2</div><div class="c-credit">(1)</div><div class="c-code">01006023</div>
+                    </div>
+                    <div class="course border-yellow" onclick="goToSubject('DISCR MATH')">
+                        <div class="c-name">DISCR MATH</div><div class="c-credit">(3)</div><div class="c-code">01236251</div>
+                    </div>
+                    <div class="course border-blue" id="oop" onclick="goToSubject('OOP')">
+                        <div class="c-name">OOP</div><div class="c-credit">(3)</div><div class="c-code">01236613</div>
+                    </div>
+                    <div class="course border-yellow" onclick="goToSubject('PROB STAT')">
+                        <div class="c-name">PROB STAT</div><div class="c-credit">(3)</div><div class="c-code">01236601</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('INTERACT DE')">
+                        <div class="c-name">INTERACT DE</div><div class="c-credit">(3)</div><div class="c-code">01236619</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('APP SOFT BUSI')">
+                        <div class="c-name">APP SOFT BUSI</div><div class="c-credit">(2)</div><div class="c-code">90642118</div>
+                    </div>
+                    <div class="course border-orange" id="teamProj1" onclick="goToSubject('TEAM PROJ 1')">
+                        <div class="c-name">TEAM PROJ 1</div><div class="c-credit">(1)</div><div class="c-code">90641004</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y2">ปี 2</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1 (SEM 2/1)</div>
+                    <div class="course border-yellow" id="deLin" onclick="goToSubject('DE & LINEAR AL')">
+                        <div class="c-name">DE & LINEAR AL</div><div class="c-credit">(3)</div><div class="c-code">01236600</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('PRINC COM')">
+                        <div class="c-name">PRINC COM</div><div class="c-credit">(3)</div><div class="c-code">01236615</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('DIGITAL SYS')">
+                        <div class="c-name">DIGITAL SYS</div><div class="c-credit">(3)</div><div class="c-code">01236603</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('DIGITAL LAB')">
+                        <div class="c-name">DIGITAL LAB</div><div class="c-credit">(1)</div><div class="c-code">01236609</div>
+                    </div>
+                    <div class="course border-blue" id="dataStruct" onclick="goToSubject('DATA STRUCT')">
+                        <div class="c-name">DATA STRUCT</div><div class="c-credit">(3)</div><div class="c-code">01236614</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('SYS ANA DE')">
+                        <div class="c-name">SYS ANA DE</div><div class="c-credit">(3)</div><div class="c-code">01236626</div>
+                    </div>
+                    <div class="course border-orange" id="engInt1" onclick="goToSubject('ENG INTER 1')">
+                        <div class="c-name">ENG INTER 1</div><div class="c-credit">(3)</div><div class="c-code">90641009</div>
+                    </div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (SEM 2/2)</div>
+                    <div class="course border-blue" id="cloudLab1" onclick="goToSubject('CLOUD LAB 1')">
+                        <div class="c-name">CLOUD LAB</div><div class="c-credit">(1)</div><div class="c-code">01236256</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('DATA COM')">
+                        <div class="c-name">DATA COM</div><div class="c-credit">(3)</div><div class="c-code">01236616</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('MOB APP DEV')">
+                        <div class="c-name">MOB APP DEV</div><div class="c-credit">(3)</div><div class="c-code">01236618</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('COM ORG OS')">
+                        <div class="c-name">COM ORG OS</div><div class="c-credit">(3)</div><div class="c-code">01236627</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('DATABASE')">
+                        <div class="c-name">DATABASE</div><div class="c-credit">(3)</div><div class="c-code">01236630</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('SEN CYB PHYS')">
+                        <div class="c-name">SEN CYB PHYS</div><div class="c-credit">(3)</div><div class="c-code">01236617</div>
+                    </div>
+                    <div class="course border-blue" id="cloudLab2" onclick="goToSubject('CLOUD LAB 2')">
+                        <div class="c-name">CLOUD LAB</div><div class="c-credit">(1)</div><div class="c-code">01236628</div>
+                    </div>
+                    <div class="course border-orange" id="teamProj2" onclick="goToSubject('TEAM PROJ 2')">
+                        <div class="c-name">TEAM PROJ 2</div><div class="c-credit">(1)</div><div class="c-code">90641005</div>
+                    </div>
+                    <div class="course border-orange" id="engInt2" onclick="goToSubject('ENG INTER 2')">
+                        <div class="c-name">ENG INTER 2</div><div class="c-credit">(3)</div><div class="c-code">90641010</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y3">ปี 3</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1 (SEM 3/1)</div>
+                    <div class="course border-blue" onclick="goToSubject('WIRELESS IOT')">
+                        <div class="c-name">WIRELESS IOT</div><div class="c-credit">(3)</div><div class="c-code">01236629</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('CYB SECU')">
+                        <div class="c-name">CYB SECU</div><div class="c-credit">(3)</div><div class="c-code">01236622</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('AIOT')">
+                        <div class="c-name">AIOT</div><div class="c-credit">(3)</div><div class="c-code">01236621</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('SEMINAR')">
+                        <div class="c-name">SEMINAR</div><div class="c-credit">(0)</div><div class="c-code">01236625</div>
+                    </div>
+                    <div class="course border-blue" id="iotLab1" onclick="goToSubject('IOT LAB 1')">
+                        <div class="c-name">IOT LAB 1</div><div class="c-credit">(1)</div><div class="c-code">01236623</div>
+                    </div>
+                    <div class="course border-blue" onclick="goToSubject('MICRO EMBED')">
+                        <div class="c-name">MICRO EMBED</div><div class="c-credit">(3)</div><div class="c-code">01236612</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('GEN-ED LANG')">
+                        <div class="c-name">GEN-ED LANG</div><div class="c-credit">(3)</div><div class="c-code">90644xxx</div>
+                    </div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (SEM 3/2)</div>
+                    <div class="course border-blue" onclick="goToSubject('PLC IOT')">
+                        <div class="c-name">PLC IOT</div><div class="c-credit">(3)</div><div class="c-code">01236620</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('MAJ ELECTIVE 1')">
+                        <div class="c-name">MAJ ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('MAJ ELECTIVE 2')">
+                        <div class="c-name">MAJ ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-blue" id="iotLab2" onclick="goToSubject('IOT LAB 2')">
+                        <div class="c-name">IOT LAB 2</div><div class="c-credit">(1)</div><div class="c-code">01236627</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('GEN-ED 1')">
+                        <div class="c-name">GEN-ED 1</div><div class="c-credit">(3)</div><div class="c-code">90xxxxxx</div>
+                    </div>
+                    <div class="course border-orange" onclick="goToSubject('GEN-ED 2')">
+                        <div class="c-name">GEN-ED 2</div><div class="c-credit">(3)</div><div class="c-code">90xxxxxx</div>
+                    </div>
+                    <div class="course border-orange" id="teamProj3" onclick="goToSubject('TEAM PROJ 3')">
+                        <div class="c-name">TEAM PROJ 3</div><div class="c-credit">(1)</div><div class="c-code">90641006</div>
+                    </div>
+                </div>
+            </div>
+            <div class="plan-divider">ภาคฤดูร้อน (SEM 3/3)</div>
+            <div class="terms-container">
+                <div class="term-column" style="width: 100%;">
+                    <div class="course border-gray" onclick="goToSubject('IND TRAINING')">
+                        <div class="c-name">IND TRAINING</div><div class="c-credit">(0)</div><div class="c-code">01006004</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y4">ปี 4</div>
+
+            <div class="plan-divider">Plan 1: Project</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1 (SEM 4/1)</div>
+                    <div class="course border-gray" id="project1" onclick="goToSubject('PROJECT 1')">
+                        <div class="c-name">PROJECT 1</div><div class="c-credit">(3)</div><div class="c-code">01236606</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('ELECTIVE 1')">
+                        <div class="c-name">ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('ELECTIVE 2')">
+                        <div class="c-name">ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('FREE ELEC 1')">
+                        <div class="c-name">FREE ELEC 1</div><div class="c-credit">(3)</div><div class="c-code">xxxxxxxx</div>
+                    </div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (SEM 4/2)</div>
+                    <div class="course border-gray" id="project2" onclick="goToSubject('PROJECT 2')">
+                        <div class="c-name">PROJECT 2</div><div class="c-credit">(3)</div><div class="c-code">01236607</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('ELECTIVE 3')">
+                        <div class="c-name">ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('CAPSTONE P1')">
+                        <div class="c-name">CAPSTONE</div><div class="c-credit">(1)</div><div class="c-code">01236608</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('FREE ELEC 2')">
+                        <div class="c-name">FREE ELEC 2</div><div class="c-credit">(3)</div><div class="c-code">xxxxxxxx</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plan-divider">Plan 2: Co-op / Abroad</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1 (SEM 4/1)<br><small>เลือกอย่างใดอย่างหนึ่ง</small></div>
+                    <div class="course border-gray" onclick="goToSubject('CO-OP')">
+                        <div class="c-name">CO-OP</div><div class="c-credit">(6)</div><div class="c-code">01006029</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('STDY ABRD')">
+                        <div class="c-name">STDY ABRD</div><div class="c-credit">(6)</div><div class="c-code">01006302</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('OVRSEA TRNG')">
+                        <div class="c-name">OVRSEA TRNG</div><div class="c-credit">(6)</div><div class="c-code">01006005</div>
+                    </div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (SEM 4/2)</div>
+                    <div class="course border-gray" onclick="goToSubject('ELECTIVE 4')">
+                        <div class="c-name">ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('ELECTIVE 5')">
+                        <div class="c-name">ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('ELECTIVE 6')">
+                        <div class="c-name">ELECTIVE</div><div class="c-credit">(3)</div><div class="c-code">0123xxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('CAPSTONE P2')">
+                        <div class="c-name">CAPSTONE</div><div class="c-credit">(1)</div><div class="c-code">01236608</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('FREE ELEC 1')">
+                        <div class="c-name">FREE ELEC 1</div><div class="c-credit">(3)</div><div class="c-code">xxxxxxxx</div>
+                    </div>
+                    <div class="course border-gray" onclick="goToSubject('FREE ELEC 2')">
+                        <div class="c-name">FREE ELEC 2</div><div class="c-credit">(3)</div><div class="c-code">xxxxxxxx</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="legend-container">
+        <div class="legend-item">
+            <div class="legend-box bg-yellow"></div> พื้นฐานวิศวกรรม / วิทย์-คณิต
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-blue"></div> วิชาเอก IoT / คอมพิวเตอร์
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-orange"></div> วิชาศึกษาทั่วไป / พื้นฐาน
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-gray"></div> วิชาเลือก / โปรเจกต์ / ฝึกงาน
+        </div>
+    </div>
+
+    <div class="info-box" style="padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); margin-top: 20px; background-color: var(--box-bg);">
+        <h2 style="margin-top: 0; color: #ffffff; text-shadow: 0 0 5px #b829ff, 0 0 15px #b829ff; text-align: center;">หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมระบบไอโอทีและสารสนเทศ</h2>
+        <p><strong>โครงสร้างหลักสูตรและการจัดแผนการเรียน:</strong> อ้างอิงตามรายวิชาและหน่วยกิตของสาขาวิศวกรรมระบบไอโอทีและสารสนเทศ</p>
+        <ul style="margin-bottom: 0; line-height: 1.8;">
+            <li>รูปแบบการเรียนในปีที่ 4 แบ่งเป็น 2 แผน (Plan 1: Project หรือ Plan 2: Co-op/Study Abroad)</li>
+            <li>รายวิชาเลือก (Elective) และศึกษาทั่วไป (Gen-Ed) สามารถเลือกเรียนตามความสนใจได้ตามข้อกำหนดของหลักสูตร</li>
+        </ul>
+    </div>
+
+    <script src="planiot.js"></script>
+    <script>
+        function goToSubject(subjectName) {
+            sessionStorage.setItem('selectedSubject', subjectName);
+            window.location.href = 'subject1.html';
+        }
+    </script>
+</body>
+</html>
