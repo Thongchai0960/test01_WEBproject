@@ -83,7 +83,12 @@ body {
 }
 
 .btn-glow {
-    display: inline-block;
+    display: inline-flex;           /* เปลี่ยนจาก flex เป็น inline-flex เพื่อไม่ให้ปุ่มยืด 100% */
+    justify-content: center;        
+    align-items: center;            
+    text-align: center;             
+    width: 100%;                    /* เพิ่ม: ให้ขยายตามพื้นที่ */
+    max-width: 450px;               /* เพิ่ม: แต่กว้างสุดไม่เกิน 450px (เท่ากับปุ่มอื่น) */
     padding: 15px 40px;
     background-color: rgba(20, 5, 40, 0.8);
     color: #fff;
@@ -96,6 +101,7 @@ body {
     text-shadow: 0 0 5px var(--neon-light);
     box-shadow: 0 0 10px rgba(184, 41, 255, 0.4), inset 0 0 10px rgba(184, 41, 255, 0.4);
     animation: neonPulse 2s infinite alternate;
+    line-height: 1.5;               
 }
 
 .btn-glow:hover {
@@ -345,40 +351,38 @@ body {
 
 /* สร้างช่องว่างระหว่างปุ่ม */
 /* จัดการกล่องที่ครอบปุ่ม ให้อยู่กึ่งกลางหน้าจอ */
+/* จัดการกล่องที่ครอบปุ่ม ให้อยู่กึ่งกลางหน้าจอ และเว้นระยะห่าง */
 .action-buttons {
     display: flex;
-    flex-direction: column; /* ให้ปุ่มเรียงบน-ล่าง */
-    align-items: center;    /* จัดปุ่มให้อยู่กึ่งกลาง */
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    /*margin: 20px auto;      /* ระยะห่างจากด้านบน-ล่าง และจัดกึ่งกลางอัตโนมัติ */
+    gap: 15px; /* ใช้ gap ในการเว้นช่องว่างระหว่างปุ่ม */
     margin-top: 20px;
     margin-bottom: 30px;
     width: 100%;
 }
 
-/* ปรับแต่งปุ่มเพิ่มเติมให้สวยงามและขนาดเท่ากัน */
+/* ปรับแต่งปุ่มให้ยืดหยุ่นรองรับข้อความยาวๆ */
 .btn-primary, .btn-pdf {
     display: flex;
-    justify-content: center; /* จัดข้อความ + ไอคอน ให้อยู่ตรงกลางปุ่ม */
+    justify-content: center;
     align-items: center;
-    width: 320px;            /* ล็อกความกว้างของปุ่มให้เท่ากันทั้ง 2 อัน */
+    width: 100%;
+    max-width: 450px;       /* ปรับความกว้างสูงสุดให้พอดีกับข้อความ */
+    min-height: 55px;       /* ใช้ min-height แทน height เพื่อให้ปุ่มขยายความสูงได้ */
+    padding: 10px 20px;     /* เพิ่ม padding ให้ข้อความไม่ติดขอบ */
+    border-radius: 30px;
     text-align: center;
-}
-
-/* สไตล์สำหรับปุ่ม */
-.btn-primary, .btn-pdf {
-    display: block; /* ทำให้ปุ่มเป็นบล็อกเพื่อวางเรียงกันง่าย */
-    width: 350px; /* กำหนดความกว้างของปุ่ม */
-    height: 50px; /* กำหนดความสูงของปุ่ม */
-    border-radius: 25px; /* ทำให้มุมปุ่มโค้งมน */
-    text-align: center; /* จัดตัวอักษรกึ่งกลาง */
-    text-decoration: none; /* เอาเส้นใต้ตัวอักษรออก */
-    transition: all 0.3s ease; /* เพิ่มเอฟเฟกต์การเคลื่อนไหว */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    line-height: 1.4;       /* ปรับระยะห่างบรรทัดให้สวยงามเวลาข้อความขึ้นบรรทัดใหม่ */
 }
 
 /* สไตล์เมื่อชี้เมาส์ที่ปุ่ม */
 .btn-primary:hover, .btn-pdf:hover {
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* เพิ่มเงาเมื่อชี้เมาส์ */
+    box-shadow: 0px 5px 15px rgba(184, 41, 255, 0.5);
+    transform: translateY(-2px);
 }
 
 
