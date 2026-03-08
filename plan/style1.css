@@ -57,7 +57,7 @@ h1 {
     position: relative;
     overflow-x: auto;
     padding-bottom: 50px;
-    min-width: 1200px;
+    width: 100%;
 }
 
 #arrowLayer {
@@ -72,8 +72,8 @@ h1 {
 }
 
 .year-column {
-    flex: 1;
-    min-width: 250px;
+    flex: 1 0 280px;
+    min-width: 280px;
     background: var(--box-bg);
     border: 1px solid #333;
     border-radius: 10px;
@@ -190,3 +190,22 @@ h1 {
 .bg-blue { background-color: var(--c-blue); box-shadow: 0 0 5px var(--c-blue); }
 .bg-orange { background-color: var(--c-orange); box-shadow: 0 0 5px var(--c-orange); }
 .bg-gray { background-color: var(--c-gray); box-shadow: 0 0 5px var(--c-gray); }
+
+/* ตกแต่ง Scrollbar สำหรับกล่องตาราง */
+.plan-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.plan-container::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 10px;
+}
+
+.plan-container::-webkit-scrollbar-thumb {
+    background: var(--neon-purple);
+    border-radius: 10px;
+}
+
+.plan-container::-webkit-scrollbar-thumb:hover {
+    background: #d066ff;
+}
